@@ -48,16 +48,16 @@ class MyFrame(wx.Frame):
                 del self.crap[i]
 
         #for creating a new one: doc = wordApp.Documents.Add()sadsad
-        excel = client.Dispatch("Excel.Application")
-        word = client.Dispatch("Word.Application") # opening the template file
+        excel = client.DispatchEx("Excel.Application")
+        word = client.DispatchEx("Word.Application") # opening the template file
         #for creating a new one: doc = wordApp.Documents.Add()sadsad
         book = excel.Workbooks.Open(self.spreadsheet)
         doc = word.Documents.Open(self.document)
         sheet = book.Worksheets(1)
-        doc.SaveAs("C:\Users\Andrew\Documents\Template2.docx")
-        #doc.SaveAs("D:\Realty\Template2.docx")
+        #doc.SaveAs("C:\Users\Andrew\Documents\Template2.docx")
+        doc.SaveAs("D:\Realty\Template2.docx")
         frview = doc.Bookmarks("frontpic").Range
-        frview.InlineShapes.AddPicture(self.crap)
+        frview.InlineShapes.AddPicture(self.crap[0])
         frpic = doc.InlineShapes(1)
         frpic.LockAspectRatio = True
         frpic.Width = 378
@@ -89,6 +89,7 @@ class MyFrame(wx.Frame):
         sheet.Range("B1:D40").CopyPicture(constants.xlBitmap)
         doc.Bookmarks("proforma").Range.Paste()
         prfpic = doc.InlineShapes(2)
+        doc.InlineShapes(2).Range.Underline = False
         prfpic.LockAspectRatio = True
         prfpic.Height = 463.68
 
