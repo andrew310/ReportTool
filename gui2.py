@@ -47,6 +47,9 @@ class MyFrame(wx.Frame):
                 self.document=v
                 del self.crap[i]
 
+        excel = client.Dispatch("Excel.Application")
+        word = client.Dispatch("Word.Application") # opening the template file
+        #for creating a new one: doc = wordApp.Documents.Add()sadsad
         xcel = client.Dispatch("Excel.Application")
         word = client.Dispatch("Word.Application") # opening the template file
         #for creating a new one: doc = wordApp.Documents.Add()sadsad
