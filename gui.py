@@ -11,9 +11,11 @@ class MyFileDropTarget(wx.FileDropTarget):
         self.window.SetInsertionPointEnd()
         self.window.notify("\n%d file(s) dropped at %d,%d:\n" %
                               (len(filenames), x, y))
-        print(filenames)
+        self.testing=filenames
+        print(self.testing)
         for file in filenames:
             self.window.notify(file + '\n')
+
 
 
 class MyFrame(wx.Frame):
@@ -26,7 +28,9 @@ class MyFrame(wx.Frame):
 
 
     def notify(self, files):
-        self.tc_files.WriteText(files)
+        self.crap=files
+        print(self.crap)
+        self.tc_files.WriteText(self.crap)
 
     def SetInsertionPointEnd(self):
         self.tc_files.SetInsertionPointEnd()
