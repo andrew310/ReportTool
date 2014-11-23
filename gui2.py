@@ -16,7 +16,7 @@ class MyFileDropTarget(wx.FileDropTarget):
         #print(self.testing)
 
         for file in filenames:
-            self.window.notify(file + '\n', self.count, len(filenames))
+            self.window.notify(file, self.count, len(filenames))
             self.count = self.count+1
 
 
@@ -34,9 +34,12 @@ class MyFrame(wx.Frame):
         button.Bind(wx.EVT_BUTTON, self.onButton)
 
     def onButton(self, event):
-
-        print "Button pressed!"
-        print(self.crap)
+        self.tc=0
+        for i,v in enumerate(self.crap):
+            if self.crap[i].endswith('.xlsx'):
+                print v
+        #print "Button pressed!"
+        #print(self.crap)
 
     def notify(self, files, length, maxL):
             self.crap.append(files)
