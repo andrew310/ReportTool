@@ -6,31 +6,38 @@ class MyFileDropTarget(wx.FileDropTarget):
     def __init__(self, window):
         wx.FileDropTarget.__init__(self)
         self.window = window
+        self.count = 0
 
     def OnDropFiles(self, x, y, filenames):
         self.window.SetInsertionPointEnd()
-        self.window.notify("\n%d file(s) dropped at %d,%d:\n" %
-                              (len(filenames), x, y))
+        #self.window.notify("\n%d file(s) dropped at %d,%d:\n" %
+                              #(len(filenames), x, y))
         #self.testing=filenames
         #print(self.testing)
+
         for file in filenames:
-            self.window.notify(file + '\n')
+            self.window.notify(file + '\n', self.count, len(filenames))
+            self.count = self.count+1
 
 
 
 class MyFrame(wx.Frame):
     def __init__(self, parent,id):
         wx.Frame.__init__(self,parent,id,'Property Report Maker', size=(300,200))
+        self.crap = []
         dt1 = MyFileDropTarget(self)
         self.tc_files = wx.TextCtrl(self, -1, "", style = wx.TE_MULTILINE|wx.HSCROLL|wx.TE_READONLY)
-
         self.tc_files.SetDropTarget(dt1)
 
 
-    def notify(self, files):
-        self.crap=files
-        print(self.crap)
-        self.tc_files.WriteText(self.crap)
+    def notify(self, files, length, maxL):
+        self.crap.append(files)
+        self.tc_files.WriteText(self.crap[length])
+        if length == (maxL-1):
+            print(self.crap)
+
+
+
 
     def SetInsertionPointEnd(self):
         self.tc_files.SetInsertionPointEnd()
