@@ -33,7 +33,6 @@ class MyFrame(wx.Frame):
         dt1 = MyFileDropTarget(self)
         self.tc_files = wx.TextCtrl(self, -1, "", style = wx.TE_MULTILINE|wx.HSCROLL|wx.TE_READONLY)
         self.tc_files.SetDropTarget(dt1)
-
         button = wx.Button(panel, id=wx.ID_ANY, label="Press Me")
         button.Bind(wx.EVT_BUTTON, self.onButton)
 
@@ -47,9 +46,7 @@ class MyFrame(wx.Frame):
             if self.crap[i].endswith('.docx'):
                 self.document=v
                 del self.crap[i]
-        makeReport(self.spreadsheet, self.document, self.crap)
 
-    def makeReport(self,xlsx, docx, picture ):
         xcel = client.Dispatch("Excel.Application")
         word = client.Dispatch("Word.Application") # opening the template file
         #for creating a new one: doc = wordApp.Documents.Add()sadsad
@@ -57,6 +54,7 @@ class MyFrame(wx.Frame):
         doc = word.Documents.Open(docx)
         sheet = book.Worksheets(1)
         doc.SaveAs("C:\Users\Andrew\Documents\Template2.docx")
+        #doc.SaveAs("D:\Realty\Template2.docx")
         frview = doc.Bookmarks("frontpic").Range
         frview.InlineShapes.AddPicture(picture)
         frpic = doc.InlineShapes(1)
