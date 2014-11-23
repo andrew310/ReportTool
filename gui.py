@@ -34,11 +34,7 @@ class MyFrame(wx.Frame):
         self.crap.append(files)
         self.tc_files.WriteText(self.crap[length])
         if length == (maxL-1):
-            print(self.crap)
-
-
-
-
+            print(self.crap[2])
     def SetInsertionPointEnd(self):
         self.tc_files.SetInsertionPointEnd()
 
