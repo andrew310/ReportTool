@@ -47,19 +47,17 @@ class MyFrame(wx.Frame):
                 self.document=v
                 del self.crap[i]
 
+        #for creating a new one: doc = wordApp.Documents.Add()sadsad
         excel = client.Dispatch("Excel.Application")
         word = client.Dispatch("Word.Application") # opening the template file
         #for creating a new one: doc = wordApp.Documents.Add()sadsad
-        xcel = client.Dispatch("Excel.Application")
-        word = client.Dispatch("Word.Application") # opening the template file
-        #for creating a new one: doc = wordApp.Documents.Add()sadsad
-        book = excel.Workbooks.Open(xlsx)
-        doc = word.Documents.Open(docx)
+        book = excel.Workbooks.Open(self.spreadsheet)
+        doc = word.Documents.Open(self.document)
         sheet = book.Worksheets(1)
         doc.SaveAs("C:\Users\Andrew\Documents\Template2.docx")
         #doc.SaveAs("D:\Realty\Template2.docx")
         frview = doc.Bookmarks("frontpic").Range
-        frview.InlineShapes.AddPicture(picture)
+        frview.InlineShapes.AddPicture(self.crap)
         frpic = doc.InlineShapes(1)
         frpic.LockAspectRatio = True
         frpic.Width = 378
