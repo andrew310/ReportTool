@@ -100,10 +100,14 @@ class MyFrame(wx.Frame):
         for x in self.crap[1:]:
             proppics = doc.Bookmarks("photos").Range
             proppics.InlineShapes.AddPicture(x)
-            propphotos = doc.InlineShapes(3)
+
+
+        for y in range(len(self.crap[2:])):
+            propphotos = doc.InlineShapes(y)
             propphotos.LockAspectRatio = True
             propphotos.Height = 296.64
-            doc.InlineShapes(3).Range.Underline = False
+            doc.InlineShapes(y).Range.Underline = False
+
 
 
     def notify(self, files, length, maxL):
