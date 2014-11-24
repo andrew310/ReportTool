@@ -63,6 +63,7 @@ class MyFrame(wx.Frame):
         frpic.Width = 378
 
         #gets address from excel and puts in word
+        certnumber = sheet.Range("G5")
         address = sheet.Range("G7")
         city = sheet.Range("G8")
         state = sheet.Range("G9")
@@ -71,6 +72,7 @@ class MyFrame(wx.Frame):
         commad = ", ".join(fulladd)
         doc.Bookmarks("front").Range.InsertAfter(address)
         doc.Bookmarks("addyline2").Range.InsertAfter(commad)
+        doc.Bookmarks("CertNum").Range.InsertAfter(certnumber)
 
         #copies property char from excel
         sheet.Range("F4:G20").Copy()
