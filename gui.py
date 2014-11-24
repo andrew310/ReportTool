@@ -62,6 +62,7 @@ class MyFrame(wx.Frame):
         frpic.LockAspectRatio = True
         frpic.Width = 378
 
+
         #gets address from excel and puts in word
         certnumber = sheet.Range("G5")
         address = sheet.Range("G7")
@@ -94,6 +95,15 @@ class MyFrame(wx.Frame):
         prfpic = doc.InlineShapes(2)
         prfpic.LockAspectRatio = True
         prfpic.Height = 463.68
+
+        #propertyphotos
+        for x in self.crap[1:]:
+            proppics = doc.Bookmarks("photos").Range
+            proppics.InlineShapes.AddPicture(x)
+            propphotos = doc.InlineShapes(3)
+            propphotos.LockAspectRatio = True
+            propphotos.Height = 296.64
+            doc.InlineShapes(3).Range.Underline = False
 
 
     def notify(self, files, length, maxL):
