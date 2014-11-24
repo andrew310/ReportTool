@@ -96,18 +96,14 @@ class MyFrame(wx.Frame):
         prfpic.LockAspectRatio = True
         prfpic.Height = 463.68
 
-        #propertyphotos
-        for x in self.crap[1:]:
+ #propertyphotos
+        for x,z in enumerate(reversed(self.crap[1:])):
             proppics = doc.Bookmarks("photos").Range
-            proppics.InlineShapes.AddPicture(x)
-
-
-        for y in range(len(self.crap[2:])):
-            propphotos = doc.InlineShapes(y)
+            proppics.InlineShapes.AddPicture(z)
+            propphotos = doc.InlineShapes(x+3)
             propphotos.LockAspectRatio = True
-            propphotos.Height = 296.64
-            doc.InlineShapes(y).Range.Underline = False
-
+            propphotos.Height = 222.48
+            propphotos.Range.Underline = False
 
 
     def notify(self, files, length, maxL):
