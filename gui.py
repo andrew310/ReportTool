@@ -3,6 +3,7 @@ import wx, os
 from win32com import client
 from win32com.client import constants
 import datetime
+import gettext
 
 class MyFileDropTarget(wx.FileDropTarget):
     """"""
@@ -25,17 +26,34 @@ class MyFileDropTarget(wx.FileDropTarget):
 
 
 class MyFrame(wx.Frame):
-    def __init__(self, parent,id):
-        wx.Frame.__init__(self,parent,id,'Property Report Maker', size=(211,361))
-        self.panel = wx.Panel(self, -1,)
+    def __init__(self, *args, **kwds):
+        kwds["style"] = wx.DEFAULT_FRAME_STYLE
+        wx.Frame.__init__(self, *args, **kwds)
         self.crap = []
         self.spreadsheet=[]
         self.document=[]
         dt1 = MyFileDropTarget(self)
-        self.tc_files = wx.TextCtrl(self, -1, "", size=(200,300), style = wx.TE_MULTILINE|wx.HSCROLL|wx.TE_READONLY)
+        self.tc_files = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.TE_MULTILINE|wx.HSCROLL|wx.TE_READONLY)
         self.tc_files.SetDropTarget(dt1)
-        button = wx.Button(self, id=wx.ID_ANY, label="Make Report", size = (200,20), pos=(0,300))
-        button.Bind(wx.EVT_BUTTON, self.onButton)
+        self.button = wx.Button(self, wx.ID_ANY, _("Make Report"))
+        self.button.Bind(wx.EVT_BUTTON, self.onButton)
+
+        self.__set_properties()
+        self.__do_layout()
+
+    def __set_properties(self):
+        # begin wxGlade: MyFrame.__set_properties
+        self.SetTitle(_("Genesis Report Maker"))
+        self.SetSize((377, 347))
+        # end wxGlade
+
+    def __do_layout(self):
+        # begin wxGlade: MyFrame.__do_layout
+        sizer_1 = wx.BoxSizer(wx.VERTICAL)
+        sizer_1.Add(self.tc_files, 1, wx.EXPAND, 0)
+        sizer_1.Add(self.button, 0, wx.EXPAND, 0)
+        self.SetSizer(sizer_1)
+        self.Layout()
 
     def onButton(self, event):
         self.tc=0
@@ -136,8 +154,12 @@ class MyFrame(wx.Frame):
         self.tc_files.SetInsertionPointEnd()
 
 # testing gitpush123
-if __name__=='__main__':
-    app=wx.PySimpleApp()
-    frame=MyFrame(parent=None,id=-1)
-    frame.Show()
+if __name__ == "__main__":
+    gettext.install("app") # replace with the appropriate catalog name
+
+    app = wx.PySimpleApp(0)
+    wx.InitAllImageHandlers()
+    frame_1 = MyFrame(None, wx.ID_ANY, "")
+    app.SetTopWindow(frame_1)
+    frame_1.Show()
     app.MainLoop()
