@@ -2,6 +2,7 @@ __author__ = 'Andrew'
 import wx, os
 from win32com import client
 from win32com.client import constants
+import datetime
 
 class MyFileDropTarget(wx.FileDropTarget):
     """"""
@@ -47,6 +48,11 @@ class MyFrame(wx.Frame):
                 self.document=v
                 del self.crap[i]
 
+        dialog = wx.DirDialog(None, "Choose a directory:",style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
+        if dialog.ShowModal() == wx.ID_OK:
+            lepath = dialog.GetPath()
+        dialog.Destroy()
+
         #for creating a new one: doc = wordApp.Documents.Add()sadsad
         excel = client.Dispatch("Excel.Application")
         word = client.Dispatch("Word.Application") # opening the template file
@@ -54,7 +60,7 @@ class MyFrame(wx.Frame):
         book = excel.Workbooks.Open(self.spreadsheet)
         doc = word.Documents.Open(self.document)
         sheet = book.Worksheets(1)
-        doc.SaveAs("C:\Users\Andrew\Documents\Template2.docx")
+
         #doc.SaveAs("D:\Realty\Template2.docx")
         frview = doc.Bookmarks("frontpic").Range
         frview.InlineShapes.AddPicture(self.crap[0])
@@ -65,12 +71,23 @@ class MyFrame(wx.Frame):
 
         #gets address from excel and puts in word
         certnumber = sheet.Range("G5")
+        certnumber = str(certnumber)
+        certnumber = certnumber[:-2]
         address = sheet.Range("G7")
         city = sheet.Range("G8")
         state = sheet.Range("G9")
         zip = sheet.Range("G10")
-        fulladd = [str(city), str(state), str(zip)]
+        zip = str(zip)
+        zip = zip[:-2]
+        fulladd = [str(city), str(state), zip]
         commad = ", ".join(fulladd)
+        today = datetime.date.today()
+        date = [str(today.month), str(today.day), str(today.year)]
+        ledate = " ".join(date)
+        lesavepath = [lepath, '\\', str(certnumber), " Property Review - ", str(address), ", ", commad, "_Intermediate ", str(ledate), ".docx"]
+        lesave = "".join(lesavepath)
+        print lesave
+        doc.SaveAs(lesave)
         doc.Bookmarks("front").Range.InsertAfter(address)
         doc.Bookmarks("addyline2").Range.InsertAfter(commad)
         doc.Bookmarks("CertNum").Range.InsertAfter(certnumber)
