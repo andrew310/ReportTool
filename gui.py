@@ -44,8 +44,16 @@ class MyFrame(wx.Frame):
     def __set_properties(self):
         # begin wxGlade: MyFrame.__set_properties
         self.SetTitle(_("Genesis Report Maker"))
-        self.SetSize((377, 347))
-        # end wxGlade
+        _icon = wx.EmptyIcon()
+        dn =  os.path.dirname(__file__)
+        iconpath = [str(dn), "\o_90ddbcecced809a8-3.bmp"]
+        iconpath = "".join(iconpath)
+
+        _icon.CopyFromBitmap(wx.Bitmap(iconpath, wx.BITMAP_TYPE_ANY))
+        self.SetIcon(_icon)
+        self.SetSize((395, 347))
+        self.SetBackgroundColour(wx.Colour(50, 153, 204))
+                # end wxGlade
 
     def __do_layout(self):
         # begin wxGlade: MyFrame.__do_layout
@@ -76,7 +84,10 @@ class MyFrame(wx.Frame):
         word = client.Dispatch("Word.Application") # opening the template file
         #for creating a new one: doc = wordApp.Documents.Add()sadsad
         book = excel.Workbooks.Open(self.spreadsheet)
-        doc = word.Documents.Open(self.document)
+        dn2 =  os.path.dirname(__file__)
+        docpath = [str(dn2), "\Template.docx"]
+        docpath = "".join(docpath)
+        doc = word.Documents.Open(docpath)
         sheet = book.Worksheets(1)
 
         #doc.SaveAs("D:\Realty\Template2.docx")
@@ -104,7 +115,6 @@ class MyFrame(wx.Frame):
         ledate = " ".join(date)
         lesavepath = [lepath, '\\', str(certnumber), " Property Review - ", str(address), ", ", commad, "_Intermediate ", str(ledate), ".docx"]
         lesave = "".join(lesavepath)
-        print lesave
         doc.SaveAs(lesave)
         doc.Bookmarks("front").Range.InsertAfter(address)
         doc.Bookmarks("addyline2").Range.InsertAfter(commad)
@@ -131,6 +141,7 @@ class MyFrame(wx.Frame):
         prfpic.LockAspectRatio = True
         prfpic.Height = 463.68
 
+
  #propertyphotos
         for x,z in enumerate(reversed(self.crap[1:])):
             proppics = doc.Bookmarks("photos").Range
@@ -139,6 +150,9 @@ class MyFrame(wx.Frame):
             propphotos.LockAspectRatio = True
             propphotos.Height = 222.48
             propphotos.Range.Underline = False
+
+
+        doc.Close()
 
 
     def notify(self, files, length, maxL):
