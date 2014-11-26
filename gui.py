@@ -1,9 +1,15 @@
 __author__ = 'Andrew'
 import wx, os
+import win32com
 from win32com import client
 from win32com.client import constants
 import datetime
 import gettext
+import sys
+
+
+win32com.client.gencache.is_readonly=False
+win32com.client.gencache.GetGeneratePath()
 
 class MyFileDropTarget(wx.FileDropTarget):
     """"""
@@ -45,8 +51,8 @@ class MyFrame(wx.Frame):
         # begin wxGlade: MyFrame.__set_properties
         self.SetTitle(_("Genesis Report Maker"))
         _icon = wx.EmptyIcon()
-        dn =  os.path.dirname(os.path.realpath('__file__'))
-        iconpath = [dn, "\o_90ddbcecced809a8-3.bmp"]
+        dn =  os.path.dirname(os.path.abspath(sys.argv[0]))
+        iconpath = [str(dn), "\o_90ddbcecced809a8-3.bmp"]
         iconpath = "".join(iconpath)
 
         _icon.CopyFromBitmap(wx.Bitmap(iconpath, wx.BITMAP_TYPE_ANY))
@@ -80,11 +86,11 @@ class MyFrame(wx.Frame):
         dialog.Destroy()
 
         #for creating a new one: doc = wordApp.Documents.Add()sadsad
-        excel = client.Dispatch("Excel.Application")
-        word = client.Dispatch("Word.Application") # opening the template file
+        excel = win32com.client.gencache.EnsureDispatch("Excel.Application")
+        word = win32com.client.gencache.EnsureDispatch("Word.Application") # opening the template file
         #for creating a new one: doc = wordApp.Documents.Add()sadsad
         book = excel.Workbooks.Open(self.spreadsheet)
-        dn2 =  os.path.dirname(os.path.realpath('__file__'))
+        dn2 =  os.path.dirname(os.path.abspath(sys.argv[0]))
         docpath = [str(dn2), "\Template.docx"]
         docpath = "".join(docpath)
         doc = word.Documents.Open(docpath)
