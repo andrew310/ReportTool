@@ -101,7 +101,7 @@ class MyFrame(wx.Frame):
         frview.InlineShapes.AddPicture(self.crap[0])
         frpic = doc.InlineShapes(1)
         frpic.LockAspectRatio = True
-        frpic.Width = 378
+        frpic.Height = 261.36
 
 
         #gets address from excel and puts in word
@@ -149,11 +149,10 @@ class MyFrame(wx.Frame):
  #propertyphotos
         for x,z in enumerate(reversed(self.crap[1:])):
             proppics = doc.Bookmarks("photos").Range
-            proppics.InlineShapes.AddPicture(z)
-            propphotos = doc.InlineShapes(x+3)
-            propphotos.LockAspectRatio = True
-            propphotos.Height = 222.48
-            propphotos.Range.Underline = False
+            dasphoto = proppics.InlineShapes.AddPicture(z)
+            dasphoto.LockAspectRatio = True
+            dasphoto.Height = 222.48
+            dasphoto.Range.Underline = False
 
 
         doc.Close()
