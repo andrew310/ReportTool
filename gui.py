@@ -45,8 +45,8 @@ class MyFrame(wx.Frame):
         # begin wxGlade: MyFrame.__set_properties
         self.SetTitle(_("Genesis Report Maker"))
         _icon = wx.EmptyIcon()
-        dn =  os.path.dirname("__file__")
-        iconpath = [str(dn), "\o_90ddbcecced809a8-3.bmp"]
+        dn =  os.path.dirname(os.path.realpath('__file__'))
+        iconpath = [dn, "\o_90ddbcecced809a8-3.bmp"]
         iconpath = "".join(iconpath)
 
         _icon.CopyFromBitmap(wx.Bitmap(iconpath, wx.BITMAP_TYPE_ANY))
@@ -84,7 +84,7 @@ class MyFrame(wx.Frame):
         word = client.Dispatch("Word.Application") # opening the template file
         #for creating a new one: doc = wordApp.Documents.Add()sadsad
         book = excel.Workbooks.Open(self.spreadsheet)
-        dn2 =  os.path.dirname(__file__)
+        dn2 =  os.path.dirname(os.path.realpath('__file__'))
         docpath = [str(dn2), "\Template.docx"]
         docpath = "".join(docpath)
         doc = word.Documents.Open(docpath)
@@ -151,6 +151,7 @@ class MyFrame(wx.Frame):
 
 
         doc.Close()
+        book.Close()
 
 
     def notify(self, files, length, maxL):
