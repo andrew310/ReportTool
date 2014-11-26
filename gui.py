@@ -45,7 +45,7 @@ class MyFrame(wx.Frame):
         # begin wxGlade: MyFrame.__set_properties
         self.SetTitle(_("Genesis Report Maker"))
         _icon = wx.EmptyIcon()
-        dn =  os.path.dirname(__file__)
+        dn =  os.path.dirname("__file__")
         iconpath = [str(dn), "\o_90ddbcecced809a8-3.bmp"]
         iconpath = "".join(iconpath)
 
