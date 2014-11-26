@@ -121,11 +121,9 @@ class MyFrame(wx.Frame):
         doc.Bookmarks("CertNum").Range.InsertAfter(certnumber)
 
         #copies property char from excel
-        sheet.Range("F4:G20").Copy()
+        sheet.Range("F4:G19").Copy()
         doc.Bookmarks("Prop").Range.PasteAndFormat(constants.wdFormatOriginalFormatting)
         tbl = doc.Tables(1).Rows.Alignment = constants.wdAlignRowCenter
-        doc.Tables(1).Rows(13).Delete()
-        doc.Tables(1).Rows(16).Delete()
         doc.Tables(1).Borders.Enable = True
 
         #copies repair estimate from excel
