@@ -3,11 +3,12 @@ import wx, os
 import win32com
 from win32com import client
 from win32com.client import constants
+from win32com.client import gencache
 import datetime
 import gettext
 import sys
 
-
+gencache.EnsureModule('{00020813-0000-0000-C000-000000000046}', 0, 1, 8)
 win32com.client.gencache.is_readonly=False
 win32com.client.gencache.GetGeneratePath()
 
@@ -146,12 +147,18 @@ class MyFrame(wx.Frame):
         prfpic.Height = 463.68
 
 
+
+
  #propertyphotos
         for x,z in enumerate(reversed(self.crap[1:])):
             proppics = doc.Bookmarks("photos").Range
             dasphoto = proppics.InlineShapes.AddPicture(z)
             dasphoto.LockAspectRatio = True
             dasphoto.Height = 222.48
+            if dasphoto.Height > dasphoto.Width:
+               dasphoto.Range.Borders.Enable = True
+               dasphoto.Range.Borders.OutsideLineWidth = constants.wdLineWidth450pt
+               dasphoto.Range.Borders.OutsideColor = constants.wdColorWhite
             dasphoto.Range.Underline = False
 
 
@@ -175,8 +182,7 @@ class MyFrame(wx.Frame):
 if __name__ == "__main__":
     gettext.install("app") # replace with the appropriate catalog name
 
-    app = wx.PySimpleApp(0)
-    wx.InitAllImageHandlers()
+    app = wx.App(False)
     frame_1 = MyFrame(None, wx.ID_ANY, "")
     app.SetTopWindow(frame_1)
     frame_1.Show()
