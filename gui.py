@@ -1,5 +1,5 @@
 __author__ = 'Andrew'
-import wx, os
+import wx
 import win32com
 from win32com import client
 from win32com.client import constants
@@ -52,7 +52,7 @@ class MyFrame(wx.Frame):
         # begin wxGlade: MyFrame.__set_properties
         self.SetTitle(_("Genesis Report Maker"))
         _icon = wx.EmptyIcon()
-        dn =  os.path.dirname(os.path.abspath(sys.argv[0]))
+        dn =  sys.path[0]
         iconpath = [str(dn), "\o_90ddbcecced809a8-3.bmp"]
         iconpath = "".join(iconpath)
 
@@ -76,6 +76,9 @@ class MyFrame(wx.Frame):
             if self.crap[i].endswith('.xlsx'):
                 self.spreadsheet=v
                 del self.crap[i]
+            elif self.crap[i].endswith('.XLSX'):
+                self.spreadsheet=v
+                del self.crap[i]
         for i,v in enumerate(self.crap):
             if self.crap[i].endswith('.docx'):
                 self.document=v
@@ -91,7 +94,7 @@ class MyFrame(wx.Frame):
         word = win32com.client.gencache.EnsureDispatch("Word.Application") # opening the template file
         #for creating a new one: doc = wordApp.Documents.Add()sadsad
         book = excel.Workbooks.Open(self.spreadsheet)
-        dn2 =  os.path.dirname(os.path.abspath(sys.argv[0]))
+        dn2 =  sys.path[0]
         docpath = [str(dn2), "\Template.docx"]
         docpath = "".join(docpath)
         doc = word.Documents.Open(docpath)
