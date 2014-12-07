@@ -135,14 +135,24 @@ class MyFrame(wx.Frame):
         doc.Bookmarks("Prop").Range.PasteAndFormat(constants.wdFormatOriginalFormatting)
         tbl = doc.Tables(1).Rows.Alignment = constants.wdAlignRowCenter
         doc.Tables(1).Borders.Enable = True
+        doc.Tables(1).Cell(1,1).Borders(constants.wdBorderRight).LineStyle = constants.wdLineStyleNone
+        tisch = doc.Tables(1).Rows.Count
+        if int(tisch) > 15:
+            doc.Tables(1).Rows(13).Delete()
+
+
+
 
         #copies repair estimate from excel
         sheet.Range("F21:G37").Copy()
         doc.Bookmarks("repair").Range.PasteAndFormat(constants.wdFormatOriginalFormatting)
         tbl2 = doc.Tables(2).Rows.Alignment = constants.wdAlignRowCenter
 
+
+
         #copies pro forma from excel
-        sheet.Range("B1:D40").CopyPicture(constants.xlBitmap)
+        excel.ActiveWindow.View = constants.xlNormalView
+        sheet.Range("B1:D40").CopyPicture(constants.xlScreen, constants.xlBitmap)
         doc.Bookmarks("proforma").Range.Paste()
         doc.InlineShapes(2).Range.Underline = False
         prfpic = doc.InlineShapes(2)
